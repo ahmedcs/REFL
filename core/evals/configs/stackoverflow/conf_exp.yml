@@ -1,0 +1,66 @@
+
+# Configuration file of Stackoverflow training experiment
+exp_path: $MAIN_PATH/REFL/core
+
+# Entry function of executor and aggregator under $exp_path
+executor_entry: executor.py
+
+aggregator_entry: aggregator.py
+
+auth:
+    ssh_user: ""
+    ssh_private_key: ~/.ssh/id_rsa
+
+# cmd to run before we can indeed run oort (in order)
+setup_commands:
+    - source $CONDA_SOURCE_PATH
+    - conda activate $CONDA_ENV
+
+# ========== Additional job configuration ==========
+# Default parameters are specified in argParser.py, wherein more description of the parameter can be found
+
+job_conf: 
+    - log_path: $MAIN_PATH/REFL/core/evals # Path of log files
+    - job_name: stackoverflow               # Generate logs under this folder: log_path/job_name/time_stamp
+    - data_set: stackoverflow                     # Dataset: openImg, google_speech, blog(stackoverflow)
+    - total_worker: $WORKERS                     # Number of participants per round, we use K=100 in our paper, large K will be much slower
+    - task: nlp
+    - data_dir: $DATA_PATH                            # Path of the dataset
+    - data_map_dir: $DATA_PATH/client_data_mapping         # Allocation of data to each client, turn to iid setting if not provided
+    - device_conf_file: $MAIN_PATH/REFL/dataset/data/device_info/client_device_capacity     # Path of the client trace
+    - device_avail_file: $MAIN_PATH/REFL/dataset/data/device_info/client_behave_trace
+    - sample_mode: $SAMPLER                                  # Client selection: random, oort
+    - gradient_policy: $AGGREGATOR
+    - model: albert-base-v2                            # Models: shufflenet_v2_x2_0, mobilenet_v2, resnet34, albert-base-v2
+    - round_penalty: 2.0                    # Penalty factor in our paper (\alpha), \alpha -> 0 turns to (Oort w/o sys)
+    - eval_interval: 20                     # How many rounds to run a testing on the testing set
+    - epochs: 1000                           # Number of rounds to run this training. We use 1000 in our paper, while it may converge w/ ~400 rounds
+    - filter_less: 41
+    - batch_size: 40
+    - test_bsz: 40
+    - num_loaders: 2                        # Dataloaders
+    - learning_rate: 1e-4 #4e-5
+    - min_learning_rate: 1e-5
+    - local_steps: $LOCALSTEPS
+    - use_wandb: 1
+    - stale_update: $STALEUPDATES
+    - deadline: $DEADLINE
+    - target_ratio: $TARGETRATIO
+    - last_worker: 0
+    - random_behv: $RANDBEHV
+    - avail_priority: $AVAILPRIO
+    - avail_probability: $AVAILPROP
+    - partitioning: $PARTITION
+    - zipf_param: 1.95
+    #- filter_class_ratio: 0.4
+    - total_clients: $CLIENTS
+    - exp_type: $EXPTYPE
+    - overcommitment: $OVERCOMMIT
+    - train_ratio: 0.2
+    - test_ratio: 0.2  # 10% for testing stackoverflow test set are quite large and take siginifcant time to finish test round
+    - wandb_key: $WANDB_KEY
+    - send_delta: 0
+    - model_boost: 0
+    - stale_all: 0
+    - adapt_selection: 1
+    - wandb_tags: $TAGS
