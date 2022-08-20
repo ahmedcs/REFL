@@ -14,15 +14,18 @@ Fig4: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'plot_motive2' 
 Selection Methods: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'avail_yogi' 'Test' 1 10
 Staleness Aggregation: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'stale_yogi' 'Test' 1 10
 Compare with Safa - Fig 10: python plots/plot_exp.py 'safa' google_speech_resnet34 'fig2' 'Test' 0 1000
-Sys-advance: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'plot_scalesyspercent' 'Test' 1 10 1 oort
 Selection Adaptation (APT) - Fig 11: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'avail_selectadapt' 'Test' 0 50
 ```
 ### Commands to plot figures of the future proof
 ```
-avail_yogi_scale: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'avail_yogi_scale' 'Test' 1 10
-Safa-Fig3: python plots/plot_exp.py 'safa_large' google_speech_resnet34 'fig3' 'Test' 0 3000
+EAFL-vs-Oort-Future: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'plot_scalesyspercent' 'Test' 1 10 1 oort
+Safa-large: python plots/plot_exp.py 'safa_large' google_speech_resnet34 'fig3' 'Test' 0 3000
 ```
 
+### Command to plot the figures related to the stale updates mainiplation methods of the SAA module
+```
+stale update methods: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'avail_yogi_scale' 'Test' 1 10
+```
 ### Command to plot the convergence plots for extended number of rounds
 ```
 avail_yogi_converge - Fig 9: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'avail_yogi_converge' 'Test' 1 10

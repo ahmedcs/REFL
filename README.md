@@ -92,16 +92,33 @@ To run the experiments, we provide a customizable script that can automate launc
 The script takes as input, the dataset (or benchmark) to run and it will run all experiments and assigns to each server in a round robin fashion one experiment at a time until all experiments are launched at the same time. 
 Ideally, we need to run a single experiment on each server, where 1 GPU is used as an aggregator and remaining ones are executors
 
-In `run_exps.sh` script, the IPS list refers to the list of server IPs and the GPUS list refers to number of GPUs per server. 
+In [run_exps.sh](run_exps.sh) script, the IPS list refers to the list of server IPs and the GPUS list refers to number of GPUs per server. 
 The remaining settings to be adjusted are well commented in the script file and they are passed to the experiments' [config files](core/evals/configs) as environment variables
 The following is an example of experiment invocation, by default we have 4 servers each equipped with 4 GPUs set in the `run_exps.sh` script.
+
 ```
+conda activate refl
 bash run_exps.sh google_speech
+```
+Additionally we give a customized version of the [run_exps.sh](run_exps.sh) script, which are [run_E1.sh](run_E1.sh) and [run_E2.sh](run_E2.sh) to run experiments comparing REFL vs Oort (the results of Figure 9.b in the paper) and REFL vs SAFA (the results in Figure 10.b in the paper), respectively.  
+Now, to run the experiment E1, just invoke the following line in the main directory. Ensure to login to WANDB or set the WANDB_API_KEY in the script file.
+```
+conda activate refl
+bash run_E1.sh google_speech
 ```
 **Note each experiment is launched with its own timestamp and all logs and intermediate models are stored in a folder named after the timestamp**
 
+## Plotting the experiments
+The experimental results are collected and uploaded automatically via the WANDB visualization tool APIs (\url{wandb.ai}). 
+To plot the results, we provide a customizable script that can automate plotting the results by invoking WANDB APIs to get the data and use Matplotlib for actual plotting. 
+The script is located in the plots directory and named [plot_exp.py](plots/plot_exp.py) which helps with plotting the results.
+We also give all the commands used for plotting all the figures in the paper as detailed in [plot_cmds](plots/plot_cmds.md), for example to plot the results from experiments of [run_E1](run_E1.sh), invoke the following command:
+```
+python plots/plot_exp.py 'exp_type' google_speech_resnet34 'oort' 'Test' 1 10
+```
+
 ## Stopping the experiments
-To stop the experiments, we provide a customizable script that can automate killing certain experiments of particular benchmark or all the benchmarks. The script takes as input the dataset name (or benchmark) and the auto generated timestamp based on current date and time.
+To stop the experiments before they complete, we provide a customizable script that can automate killing certain experiments of particular benchmark or all the benchmarks. The script takes as input the dataset name (or benchmark) and the auto generated timestamp based on current date and time.
 To kill the currently running google_speech experiments with a timestamp 220722_12737
 ```
 bash kill_exps.sh google_speech 220722_12737
@@ -120,6 +137,7 @@ bash kill_exps.sh all
 ```
 Repo Root
 |---- dataset     # Realistic datasets in REFL
+|---- plots      # scripts and commands for plotting the results
 |---- core        # Experiment platform of REFL containing aggregator, clients, executors and resource manager
     |---- utils   # Utiliy and helper modules such as dataloaders, decoder, data divider, models, etc
     |---- evals     # Backend of job submission

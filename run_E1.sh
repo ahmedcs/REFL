@@ -10,15 +10,15 @@ config_dir=`ls -1 configs/$dataset/*exp.*`
 #other parameters is related to the server IPs and number of GPUs to utilize
 
 #Set the list of IP addresses to run the experiment, each server will run a single experiment in a round robin fashion
-declare -a IPS=('127.0.0.1')
-#declare -a IPS=('10.0.0.1' '10.0.0.2' '10.0.0.3' '10.0.0.4')
+#declare -a IPS=('127.0.0.1')
+declare -a IPS=('10.0.0.1' '10.0.0.2')
 
 #Set the list with the number of GPUs to utilize on each server
-declare -a GPUS=("1")
-#declare -a GPUS=("4" "4" "4" "4")
+#declare -a GPUS=("1")
+declare -a GPUS=("4" "4")
 
 #number of servers
-SERVERS=4
+SERVERS=2
 
 #the path to the project
 export MAIN_PATH=/home/user/REFL
@@ -33,7 +33,7 @@ export CONDA_PATH=/home/user/miniconda3/etc/profile.d/conda.sh
 export WANDB_KEY=""
 
 #Tag to identify the experiment on WANDB
-tags="safa" #"r-safa" #"badstale" #"avail" #"central" #"motive2" "motive1" #"safa1" #"avail" #"stale" # #"avail" #"safa" "r-safa"  "delta"
+tags="oort" #"r-safa" #"badstale" #"avail" #"central" #"motive2" "motive1" #"safa1" #"avail" #"stale" # #"avail" #"safa" "r-safa"  "delta"
 export TAGS=$tags
 
 #setup the python path
@@ -42,7 +42,7 @@ PY=`which python`
 
 #---- Setting the main experimental parameters -----
 #number of FL rounds
-epochs=1000
+epochs=5000
 #number of local training epochs to run on each client
 steps="1"
 #number of workers per round
@@ -54,29 +54,29 @@ aggregators="yogi" #"fedavg prox yogi"
 #target number of clients to complete the round (80% as per Google recommendation)
 targetratios="0.8" #"0.1" for safa #"0.1 0.3" # 0.8 is default, 0 means no round failures
 #total number of clients in the experiment: 0: use the benchmarks default number of clients, otherwise set as needed (needs to be set for CIFAR10)
-clients=1000 #"3000"
+clients=0 #"3000"
 #the data partitioning method: -1 IID-uniform, 0 Fedscale mapping, 1 NONIID-Uniform, 2 NONIID-Zipfian, 3 NONIID-Balanced
 partitions="1" #"-1 0 1 2 3"
 #sampling seed set for randomizing the experiment, the experiment runs 3 times with seeds 0, 1 and 2 and average is taken
-sampleseeds="0 1 2"
+sampleseeds="0"
 #introduce artificial dropouts
 dropoutratio=0.0 #not used in experiments
 # The overcommitted clients during the selection phase to account for possible dropouts, similar to oort it is set to 30%
 overcommit="1.3"
 # experiment type: 0 - we relay on round deadlines for completion similar to Google's system setting
 #                  1 - we wait for the target ratio to complete the round and there is no deadline simialr to setting in oort
-exptypes="0" #"0 1"
+exptypes="1" #"0 1"
 # use Behaviour heterogenity or not: 0: do not use behaviour trace - always available, 1: use behaviour trace, dynamic client availability
 randbehv="1" #0 1
 
 #---- Selection scheme -----
 #client sampling choice either Random or Oort, if REFL is enabled then this selection does not matter, default is random
-samplers="random" #"random oort"
+samplers="oort" #"random oort"
 
 ## ------- REFL related parameters ----------
 ### Stale-Aware Aggregation (SAA) Module
 #whether to use stale aggregation -1:use REFL's Stale-Aware Aggregation, 0:no stale aggregation, otherwise the number of rounds for the threshold, e.g., SAFA use 5 for stale rounds threshold
-stales="-1" #-1 1 5
+stales="0 -1" #-1 1 5
 # The multiplication factor for the weight/importance of new updates: 0: not used similar to 1:Equal weight as of the new updates, 2: divide by fixed weight 2 (half),
 # If the value is negative, it indicated the method used by REFL-SAA module to manipulate (boost and damp) the stale updates:  -1:Average stale rounds, -2:AdaSGD, -3:DynSGD, -4: REFL Method
 stalefactors="-4" #"2 0 1 -1 -2 -3 -4"
@@ -86,10 +86,9 @@ scalebeta=0.35 #0.65
 scalecoff=1
 
 
-
 ### Intelligent Participant Selection (IPS) Module
 #whether to use availability prioritization 0: do not use priority, 1: use availability prioritization
-availprios="1" #0 1
+availprios="0" #0 1
 # probability for the oracle to get the availability right (Accuraccy level which should match from the average performance of the time-series model)
 availprob=0.9
 #wether to enable the adaptive selection of the clients: 0: do not use, 1: use
@@ -103,49 +102,6 @@ scale_sys=1.0 #1.0 2.0
 # percentage of the clients to apply the system capabilities scaling
 scalesyspercent=0.0 #
 
-
-#We adjust the SAFA experiments as they are extermely expensive to run, all online clients are invoked in each round!
-if [  $tags == 'safa' ] || [  $tags == 'safa1' ] || [ $tags == 'r-safa' ] || [ $tags == 'n-safa' ];
-then
-  epochs=250
-  partitions="1"
-  workers="10"
-  deadlines="100"
-  exptypes="0"
-  steps="1"
-  samplers="random"
-  aggregators="fedavg"
-  clients=3000
-  stales="5"
-  availprios="0"
-  randbehv=1
-  targetratios="0.8"
-  adaptselect=1
-  dropoutratio=0.0 #0.25
-  if [ $tags == 'safa' ] || [  $tags == 'safa1' ];
-  then
-    targetratios="0.1"
-  fi
-  if [ $tags == 'n-safa' ];
-  then
-    stales="0"
-  fi
-fi
-
-# this is for running the central mode experiments
-if [  $tags == 'central' ];
-then
-  clients=10
-  workers=10
-  exptypes=1
-  randbehv=-1
-  samplers="random"
-  aggregators="fedavg"
-  stales=0
-  availprios=0
-  scale_sys=1.0
-  partitions="-1 1 2 3"
-fi
 
 if [ $dataset == 'google_speech' ] || [ $dataset == 'google_speech_dummy' ]
 then
@@ -208,7 +164,12 @@ do
                         export EXPTYPE=$exptype
                         export CLIENTS=$clients
                         export SAMPLESEED=$sampleseed
-                        export AVAILPRIO=$availprio
+                        if [[ $stale == "-1" ]]
+                        then
+                          export AVAILPRIO="1"
+                        else
+                          export AVAILPRIO=$availprio
+                        fi
                         export AVAILPROP=$availprob
                         export RANDBEHV=$randbehv
                         export ADAPT_SELECT=$adaptselect

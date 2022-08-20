@@ -12,7 +12,7 @@ auth:
 
 # cmd to run before we can indeed run oort (in order)
 setup_commands:
-    - source $CONDA_SOURCE_PATH
+    - source $CONDA_PATH
     - conda activate $CONDA_ENV
 
 # ========== Additional job configuration ========== 

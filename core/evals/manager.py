@@ -63,6 +63,7 @@ def process_cmd(yaml_file, node_ip, num_gpus):
     learner_conf = '-'.join([str(_) for _ in list(range(1, int(num_gpus)+1))])
     # =========== Submit job to parameter server ============
     running_vms.add(node_ip)
+    #Ahmed - Note we are not using a GPU for the aggreagtor by setting use_cuda=0
     ps_cmd = f" python {yaml_conf['exp_path']}/{yaml_conf['aggregator_entry']} {conf_script} --this_rank=0 --learner={learner_conf} --use_cuda=0"
 
     with open(f"{log_path}/all_logs", 'wb') as fout:
@@ -81,7 +82,6 @@ def process_cmd(yaml_file, node_ip, num_gpus):
         print(f"Starting workers on {worker_ip}:{gpu} ...")
         worker_cmd = f" python {yaml_conf['exp_path']}/{yaml_conf['executor_entry']} {conf_script} --this_rank={gpu+1} --learner={learner_conf} --cuda_device=cuda:{gpu} "
         with open(f"{log_path}/all_logs", 'a') as fout:
-                #subprocess.Popen(f'ssh {submit_user}{worker_ip} WANDB_API_KEY={wandb_key} "{setup_cmd} {worker_cmd}"', shell=True, stdout=fout, stderr=fout)
                 subprocess.Popen(f'ssh {submit_user}{worker_ip} "{setup_cmd} {worker_cmd}"', shell=True, stdout=fout, stderr=fout)
 
     # dump the address of running workers

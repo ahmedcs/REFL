@@ -12,7 +12,7 @@ auth:
 
 # cmd to run before we can indeed run oort (in order)
 setup_commands:
-    - source $CONDA_SOURCE_PATH
+    - source $CONDA_PATH
     - conda activate $CONDA_ENV
     - export NCCL_SOCKET_IFNAME=$NCCL_IF         # Run "ifconfig" to ensure the right NIC for nccl if you have multiple NICs
 

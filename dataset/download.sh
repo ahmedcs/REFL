@@ -19,7 +19,7 @@ Help()
    echo "-s     Download Speech Commands dataset (about 2.3GB)"
    echo "-o     Download Open Image dataset (about 66GB)"
    echo "-r     Download Reddit dataset (about 25G)"
-   echo "-s     Download Stackoverflow dataset (about 800M)"
+   echo "-f     Download Stackoverflow dataset (about 800M)"
    echo "-c     Download CIFAR10 dataset (about 170M)"
 }
 
@@ -134,7 +134,7 @@ while getopts ":hsoacegildrtw" option; do
       r )
          reddit
          ;;
-      s )
+      f )
          stackoverflow
          ;;
       c )
