@@ -1,5 +1,5 @@
 # Configuration file of OpenImage training experiment
-exp_path: $MAIN_PATH/REFL/core
+exp_path: $MAIN_PATH/core
 
 # Entry function of executor and aggregator under $exp_path
 executor_entry: executor.py
@@ -63,7 +63,6 @@ job_conf:
   - model_boost: 0
   - stale_all: 0
   - adapt_selection: $ADAPT_SELECT
-  - adapt_selection_cap: $ADAPT_SELECT_CAP
   - sample_seed: $SAMPLESEED
   - wandb_key: $WANDB_KEY
   - wandb_tags: $TAGS

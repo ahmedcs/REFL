@@ -1,6 +1,6 @@
 
 # Configuration file of Stackoverflow training experiment
-exp_path: $MAIN_PATH/REFL/core
+exp_path: $MAIN_PATH/core
 
 # Entry function of executor and aggregator under $exp_path
 executor_entry: executor.py

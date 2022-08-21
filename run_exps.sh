@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+#setup the python path
+cwd=`pwd`
+PY=`which python`
+
+#the path to the project
+export MAIN_PATH=/home/user/REFL
+# the path to the dataset, note $dataset, the dataset name passed as argument to script
+export DATA_PATH=/home/user/REFL/dataset/$dataset
+#the path to the conda envirnoment
+export CONDA_ENV=/home/user/miniconda3/envs/refl
+#the path to the conda source script
+export CONDA_PATH=/home/user/miniconda3/etc/profile.d/conda.sh
+
+#Set WANDB for logging the experiments results or do wandb login from terminal
+export WANDB_API_KEY=""
+
 #first cmd line parameter is the dataset name
 dataset=$1
 
@@ -20,25 +36,9 @@ declare -a GPUS=("1")
 #number of servers
 SERVERS=4
 
-#the path to the project
-export MAIN_PATH=/home/user/REFL
-#the path to the project
-export DATA_PATH=/home/user/REFL/dataset/$dataset
-#the path to the conda envirnoment
-export CONDA_ENV=/home/user/miniconda3/envs/refl
-#the path to the conda source script
-export CONDA_PATH=/home/user/miniconda3/etc/profile.d/conda.sh
-
-#Set WANDB for logging the experiments results or do wandb login from terminal
-export WANDB_KEY=""
-
 #Tag to identify the experiment on WANDB
 tags="safa" #"r-safa" #"badstale" #"avail" #"central" #"motive2" "motive1" #"safa1" #"avail" #"stale" # #"avail" #"safa" "r-safa"  "delta"
 export TAGS=$tags
-
-#setup the python path
-cwd=`pwd`
-PY=`which python`
 
 #---- Setting the main experimental parameters -----
 #number of FL rounds
@@ -230,7 +230,6 @@ do
                         #experiment counter
                         count=`expr $count + 1`
 
-                        done
                         done
                       done
                     done

@@ -1,5 +1,5 @@
 # Configuration file of Google SPEECH training experiment
-exp_path: $MAIN_PATH/REFL/core
+exp_path: $MAIN_PATH/core
 
 # Entry function of executor and aggregator under $exp_path
 executor_entry: executor.py
@@ -14,7 +14,6 @@ auth:
 setup_commands:
     - source $CONDA_PATH
     - conda activate $CONDA_ENV
-    - export NCCL_SOCKET_IFNAME=$NCCL_IF         # Run "ifconfig" to ensure the right NIC for nccl if you have multiple NICs
 
 # ========== Additional job configuration ========== 
 # Default parameters are specified in argParser.py, wherein more description of the parameter can be found
@@ -63,7 +62,6 @@ job_conf:
     - model_boost: 0
     - stale_all: 0
     - adapt_selection: $ADAPT_SELECT
-    - adapt_selection_cap: $ADAPT_SELECT_CAP
     - sample_seed: $SAMPLESEED
     - wandb_key: $WANDB_KEY
     - wandb_tags: $TAGS
