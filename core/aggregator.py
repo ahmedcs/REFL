@@ -17,7 +17,6 @@ from fl_aggregator_libs import *
 from resource_manager import ResourceManager
 from utils.utils_model import cosine_sim, kl_divergence, normalize
 
-
 #import pandas as pd
 
 class Aggregator(object):

@@ -2,7 +2,6 @@ import logging
 import math
 import pickle
 from random import Random
-
 from helper.client import Client
 
 

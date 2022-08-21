@@ -12,21 +12,22 @@ auth:
 
 # cmd to run before we can indeed run oort (in order)
 setup_commands:
-    - source $CONDA_PATH
+    - source $CONDA_PATH/etc/profile.d/conda.sh
     - conda activate $CONDA_ENV
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PATH/lib
 
 # ========== Additional job configuration ========== 
 # Default parameters are specified in argParser.py, wherein more description of the parameter can be found
 
 job_conf:
-  - log_path: $MAIN_PATH/REFL/core/evals # Path of log files
+  - log_path: $MAIN_PATH/core/evals # Path of log files
   - job_name: openimage                   # Generate logs under this folder: log_path/job_name/time_stamp
   - total_worker: $WORKERS                      # Number of participants per round, we use K=100 in our paper, large K will be much slower
   - data_set: openImg                     # Dataset: openImg, google_speech, stackoverflow
   - data_dir: $DATA_PATH   # Path of the dataset
   - data_map_dir: $DATA_PATH/client_data_mapping             # Allocation of data to each client, turn to iid setting if not provided
-  - device_conf_file: $MAIN_PATH/REFL/dataset/data/device_info/client_device_capacity     # Path of the client trace
-  - device_avail_file: $MAIN_PATH/REFL/dataset/data/device_info/client_behave_trace
+  - device_conf_file: $MAIN_PATH/dataset/data/device_info/client_device_capacity     # Path of the client trace
+  - device_avail_file: $MAIN_PATH/dataset/data/device_info/client_behave_trace
   - model: shufflenet_v2_x2_0                            # Models: e.g., shufflenet_v2_x2_0, mobilenet_v2, resnet34, albert-base-v2
   - sample_mode: $SAMPLER
   - gradient_policy: $AGGREGATOR                 # {"fed-yogi", "fed-prox", "fed-avg"}, "fed-avg" by default
@@ -64,7 +65,7 @@ job_conf:
   - stale_all: 0
   - adapt_selection: $ADAPT_SELECT
   - sample_seed: $SAMPLESEED
-  - wandb_key: $WANDB_KEY
+  - wandb_key: $WANDB_API_KEY
   - wandb_tags: $TAGS
   - dropout_ratio: $DROPOUT_RATIO
   - scale_sys: $SCALE_SYS

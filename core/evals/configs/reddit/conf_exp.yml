@@ -12,8 +12,9 @@ auth:
 
 # cmd to run before we can indeed run oort (in order)
 setup_commands:
-    - source $CONDA_PATH
+    - source $CONDA_PATH/etc/profile.d/conda.sh
     - conda activate $CONDA_ENV
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PATH/lib
 
 # ========== Additional job configuration ==========
 # Default parameters are specified in argParser.py, wherein more description of the parameter can be found
@@ -57,7 +58,7 @@ job_conf:
     #- used_samples: 200
     - train_ratio: 0.2
     - test_ratio: 0.2
-    - wandb_key: $WANDB_KEY
+    - wandb_key: $WANDB_API_KEY
     - send_delta: 0
     - model_boost: 0
     - stale_all: 0

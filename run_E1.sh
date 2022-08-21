@@ -9,9 +9,9 @@ export MAIN_PATH=/home/user/REFL
 # the path to the dataset, note $dataset, the dataset name passed as argument to script
 export DATA_PATH=/home/user/REFL/dataset/$dataset
 #the path to the conda envirnoment
-export CONDA_ENV=/home/user/miniconda3/envs/refl
+export CONDA_ENV=/home/user/anaconda3/envs/refl
 #the path to the conda source script
-export CONDA_PATH=/home/user/miniconda3/etc/profile.d/conda.sh
+export CONDA_PATH=/home/user/anaconda3/
 
 #Set WANDB for logging the experiments results or do wandb login from terminal
 export WANDB_API_KEY=""
@@ -81,7 +81,7 @@ stales="0 -1" #-1 1 5
 # If the value is negative, it indicated the method used by REFL-SAA module to manipulate (boost and damp) the stale updates:  -1:Average stale rounds, -2:AdaSGD, -3:DynSGD, -4: REFL Method
 stalefactors="-4" #"2 0 1 -1 -2 -3 -4"
 # The beta value for the weighted average of the damping and scaling factors in the stale update
-scalebeta=0.35 #0.65
+stalebeta=0.35 #0.65
 #The scaling coefficient to boost the good stale updates
 scalecoff=1
 
@@ -103,11 +103,11 @@ scale_sys=1.0 #1.0 2.0
 scalesyspercent=0.0 #
 
 
-if [ $dataset == 'google_speech' ] || [ $dataset == 'google_speech_dummy' ]
+if [[ $dataset == 'google_speech'  || $dataset == 'google_speech_dummy' ]]
 then
   config_dir=`ls -1 configs/google_speech/*exp.*`
 else
-  if [ $dataset == 'openImg' ];
+  if [[ $dataset == 'openImg' ]];
   then
     steps="5"
     config_dir=`ls -1 configs/openimage/*exp.*`
