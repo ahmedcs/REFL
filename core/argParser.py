@@ -37,6 +37,7 @@ parser.add_argument('--use_wandb', type=boolean_string, default=False) # enables
 parser.add_argument('--resume_wandb', type=boolean_string, default=False) # enables resume of wandb loggging from last point - not sure if it works
 parser.add_argument('--wandb_key', type=str, default='') # override if the WANDB_API_KEY is used instead of login
 parser.add_argument('--wandb_tags', type=str, default='') # override if the tag is applied for the run
+parser.add_argument('--wandb_entity', type=str, default='refl') # The entity or team used for WANDB logging, should be set correctly
 parser.add_argument('--enforce_sgd', type=boolean_string, default=False) # enforce SGD optimizer instead of a custom optimizer per task
 parser.add_argument('--dropout_ratio', type=float, default=0.0) # percentage of clients to select at random as dropout clients
 parser.add_argument('--send_delta', type=boolean_string, default=False) # send delta of the updated model rather than the updated model

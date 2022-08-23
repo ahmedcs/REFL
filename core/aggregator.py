@@ -1037,7 +1037,7 @@ class Aggregator(object):
 
 
     def log_round_metrics(self):
-        logging.info(f'Aggregate label occurances: {self.label_counter}')
+        #logging.info(f'Aggregate label occurances: {self.label_counter}')
         # Ahmed - process values
         # Ahmed - log the train metrics information to file and wandb
         # rewards_dict = {x: clientSampler.getScore(0, x) for x in sorted(clientsLastEpoch)}
@@ -1362,6 +1362,10 @@ class Aggregator(object):
                 os.environ['WANDB_API_KEY'] = args.wandb_key
                 logging.info('WANDB Key: {} {}'.format(os.environ['WANDB_API_KEY'], args.wandb_key))
 
+            if args.wandb_key is not None and str(args.wandb_entity) != '' and str(args.wandb_entity) != 'None':
+                os.environ['WANDB_ENTITY'] = args.wandb_entity
+                logging.info('WANDB Entity: {} {}'.format(os.environ['WANDB_ENTITY'], args.wandb_entity))
+
             tags = []
             if args.wandb_tags is not None and str(args.wandb_tags) != '' and str(args.wandb_tags) != 'None':
                 vals = str(args.wandb_tags).split('_')
@@ -1375,11 +1379,11 @@ class Aggregator(object):
                 args.target_ratio) + '_O' + str(args.overcommitment) + '_' + str(args.sample_seed) \
                 # + '_R' + str(args.epochs) + '_E' + str(args.local_steps) + '_B' + str(args.batch_size)
             if args.resume_wandb:
-                aggregator.wandb_run = wandb.init(settings=wandb.Settings(start_method="fork"), project=project, entity='refl', name=run_name,
+                aggregator.wandb_run = wandb.init(settings=wandb.Settings(start_method="fork"), project=project, entity=args.wandb_entity, name=run_name,
                                                   config=dict(args.__dict__), id=run_name + '_' + args.time_stamp,
                                                   resume=True, anonymous='allow', tags=tags)
             else:
-                aggregator.wandb_run = wandb.init(settings=wandb.Settings(start_method="fork"), project=project, entity='refl', name=run_name,
+                aggregator.wandb_run = wandb.init(settings=wandb.Settings(start_method="fork"), project=project, entity=args.wandb_entity, name=run_name,
                                                   id=run_name + '_' + args.time_stamp, config=dict(args.__dict__),
                                                   anonymous='allow', tags=tags)
         ############################################

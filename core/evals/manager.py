@@ -70,9 +70,9 @@ def process_cmd(yaml_file, node_ip, num_gpus):
         pass
 
     print(f"Starting aggregator on {node_ip}...")
-    print(f'ssh {submit_user}{node_ip} "{setup_cmd} {ps_cmd}"')
     with open(f"{log_path}/all_logs", 'a') as fout:
         subprocess.Popen(f'ssh {submit_user}{node_ip} "{setup_cmd} {ps_cmd}"', shell=True, stdout=fout, stderr=fout)
+    print(f'ssh {submit_user}{node_ip} "{setup_cmd} {ps_cmd}"')
 
     time.sleep(20)
     # =========== Submit job to each worker ============
@@ -83,6 +83,7 @@ def process_cmd(yaml_file, node_ip, num_gpus):
         worker_cmd = f" python {yaml_conf['exp_path']}/{yaml_conf['executor_entry']} {conf_script} --this_rank={gpu+1} --learner={learner_conf} --cuda_device=cuda:{gpu} "
         with open(f"{log_path}/all_logs", 'a') as fout:
                 subprocess.Popen(f'ssh {submit_user}{worker_ip} "{setup_cmd} {worker_cmd}"', shell=True, stdout=fout, stderr=fout)
+        print(f'ssh {submit_user}{node_ip} "{setup_cmd} {worker_cmd}"')
 
     # dump the address of running workers
     current_path = os.path.dirname(os.path.abspath(__file__))

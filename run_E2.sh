@@ -7,7 +7,7 @@ PY=`which python`
 #the path to the project
 export MAIN_PATH=/home/user/REFL
 # the path to the dataset, note $dataset, the dataset name passed as argument to script
-export DATA_PATH=/home/user/REFL/dataset/$dataset
+export DATA_PATH=/home/user/REFL/dataset/data/${dataset}
 #the path to the conda envirnoment
 export CONDA_ENV=/home/user/anaconda3/envs/refl
 #the path to the conda source script
@@ -15,6 +15,8 @@ export CONDA_PATH=/home/user/anaconda3
 
 #Set WANDB for logging the experiments results or do wandb login from terminal
 export WANDB_API_KEY=""
+# The entity or team used for WANDB logging, should be set correctly, typically should be set your WANDB userID
+export WANDB_ENTITY=""
 
 #first cmd line parameter is the dataset name
 dataset=$1
@@ -55,8 +57,8 @@ aggregators="yogi" #"fedavg prox yogi"
 #target number of clients to complete the round (80% as per Google recommendation)
 targetratios="0.8" #"0.1" for safa #"0.1 0.3" # 0.8 is default, 0 means no round failures
 #total number of clients in the experiment: 0: use the benchmarks default number of clients, otherwise set as needed (needs to be set for CIFAR10)
-clients=1000 #"3000"
-#the data partitioning method: -1 IID-uniform, 0 Fedscale mapping, 1 NONIID-Uniform, 2 NONIID-Zipfian, 3 NONIID-Balanced
+clients=1000 #"0" "1000" "3000"
+# the data partitioning method: -1 IID-uniform, 0 Fedscale mapping, 1 NONIID-Uniform, 2 NONIID-Zipfian, 3 NONIID-Balanced
 partitions="1" #"-1 0 1 2 3"
 #sampling seed set for randomizing the experiment, the experiment runs 3 times with seeds 0, 1 and 2 and average is taken
 sampleseeds="0"

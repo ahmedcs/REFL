@@ -204,8 +204,8 @@ class _training_selector(object):
             logging.debug("Training selector: utilLastPacerRounds {}, utilCurrentPacerRounds {} in round {}"
                 .format(utilLastPacerRounds, utilCurrentPacerRounds, self.training_round))
 
-        logging.info("Training selector: Pacer {}: lastExploitationUtil {}, lastExplorationUtil {}, last_util_record {}".
-                        format(self.training_round, lastExploitationUtil, lastExplorationUtil, self.last_util_record))
+        #logging.info("Training selector: Pacer {}: lastExploitationUtil {}, lastExplorationUtil {}, last_util_record {}".
+        #                format(self.training_round, lastExploitationUtil, lastExplorationUtil, self.last_util_record))
 
     def update_client_util(self, clientId, feedbacks):
         '''
@@ -400,8 +400,8 @@ class _training_selector(object):
             _staleness = self.alpha*((self.training_round-self.totalArms[clientId]['time_stamp']) - min_staleness)/float(range_staleness) #math.sqrt(0.1*math.log(cur_time)/max(1e-4, self.totalArms[clientId]['time_stamp']))
             top_k_score.append((self.totalArms[clientId], [_score, _staleness]))
 
-        logging.info("At round {}, UCB exploited {}, augment_factor {}, exploreLen {}, un-explored {}, exploration {}, round_threshold {}, sampled score is {}"
-            .format(self.training_round, numOfExploited, augment_factor/max(1e-4, exploitLen), exploreLen, len(self.unexplored), self.exploration, self.round_threshold, top_k_score))
+       # logging.info("At round {}, UCB exploited {}, augment_factor {}, exploreLen {}, un-explored {}, exploration {}, round_threshold {}, sampled score is {}"
+       #     .format(self.training_round, numOfExploited, augment_factor/max(1e-4, exploitLen), exploreLen, len(self.unexplored), self.exploration, self.round_threshold, top_k_score))
         # logging.info("At time {}, all rewards are {}".format(cur_time, allloss))
 
         return pickedClients

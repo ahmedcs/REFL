@@ -246,7 +246,8 @@ class DataPartitioner(object):
                 count_elems = Counter(labels)
                 tempClassPerWorker[worker][keyDir[c]] += takeLength
 
-            logging.info(f'worker: {worker} created partition len: {len(self.partitions[-1])} class/worker: {sum(tempClassPerWorker[worker])} labels:{tempClassPerWorker[worker]} ratios: {ratioOfClassWorker[worker]}')
+            #logging.info(f'worker: {worker} created partition len: {len(self.partitions[-1])} class/worker: {sum(tempClassPerWorker[worker])} labels:{tempClassPerWorker[worker]} ratios: {ratioOfClassWorker[worker]}')
+
         del tempClassPerWorker
 
         #save the partitions as pickle file
@@ -275,7 +276,8 @@ class DataPartitioner(object):
                 for wr in wrandom:
                     ratioOfClassWorker[w][wr] = 0.0 #0.001
 
-        logging.info("==== Class per worker partitioning:{} clients:{} labels:{} rem_lable:{} count:{}  ====\n {} \n".format(self.args.partitioning, len(sizes), numOfLabels, num_remove_class, np.count_nonzero(ratioOfClassWorker), repr(ratioOfClassWorker)))
+        #logging.info("==== Class per worker partitioning:{} clients:{} labels:{} rem_lable:{} count:{}  ====\n {} \n".format(self.args.partitioning, len(sizes), numOfLabels, num_remove_class, np.count_nonzero(ratioOfClassWorker), repr(ratioOfClassWorker)))
+        logging.info("==== Class per worker partitioning:{} clients:{} labels:{} rem_lable:{} count:{}  ==== \n".format(self.args.partitioning, len(sizes), numOfLabels, num_remove_class, np.count_nonzero(ratioOfClassWorker)))
         return ratioOfClassWorker
 
     def getTargets(self):

@@ -22,7 +22,7 @@ setup_commands:
 job_conf:
     - log_path: $MAIN_PATH/REFL/core/evals # Path of log files
     - job_name: reddit                   # Generate logs under this folder: log_path/job_name/time_stamp
-    - total_worker: $WORKERS                     # Number of participants per round, we use K=100 in our paper, large K will be much slower
+    - total_worker: $WORKERS                     # Number of participants per round, we use K=10 in our paper, large K will be much slower
     - data_set: reddit                     # Dataset: openImg, google_speech, stackoverflow
     - task: nlp
     - data_dir: $DATA_PATH                            # Path of the dataset
@@ -59,6 +59,7 @@ job_conf:
     - train_ratio: 0.2
     - test_ratio: 0.2
     - wandb_key: $WANDB_API_KEY
+    - wandb_entity: $WANDB_ENTITY
     - send_delta: 0
     - model_boost: 0
     - stale_all: 0

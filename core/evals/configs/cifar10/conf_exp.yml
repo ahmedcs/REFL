@@ -61,5 +61,6 @@ job_conf:
     - adapt_selection: 1
     - sample_seed: $SAMPLESEED
     - wandb_key: $WANDB_API_KEY
+    - wandb_entity: $WANDB_ENTITY
     - wandb_tags: $TAGS
 

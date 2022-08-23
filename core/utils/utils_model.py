@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import logging
 import math
 import random
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torch.autograd import Variable
+import numpy as np
+import logging
 from argParser import args
 from utils.nlp import mask_tokens
 

@@ -92,8 +92,27 @@ To run the experiments, we provide a customizable script that can automate launc
 The script takes as input, the dataset (or benchmark) to run and it will run all experiments and assigns to each server in a round robin fashion one experiment at a time until all experiments are launched at the same time. 
 Ideally, we need to run a single experiment on each server, where 1 GPU is used as an aggregator and remaining ones are executors
 
+The experimental results are collected and uploaded automatically via the WANDB visualization tool APIs called [WANDB](wandb.ai). **You should create/have an account on [WANDB](wandb.ai) and from the settings page get the API Key and username to set them in the experiment run scripts as shown next**
+
 In [run_exps.sh](run_exps.sh) script, the IPS list refers to the list of server IPs and the GPUS list refers to number of GPUs per server. 
-The remaining settings to be adjusted are well commented in the script file and they are passed to the experiments' [config files](core/evals/configs) as environment variables
+The remaining settings to be adjusted are well commented in the script file, they are:
+```
+#the path to the project
+export MAIN_PATH=/home/user/REFL
+# the path to the dataset, note $dataset, the dataset name passed as argument to script
+export DATA_PATH=/home/user/REFL/dataset/data/$dataset
+#the path to the conda envirnoment
+export CONDA_ENV=/home/user/anaconda3/envs/refl
+#the path to the conda source script
+export CONDA_PATH=/home/user/anaconda3/
+
+#Set WANDB for logging the experiments results or do wandb login from terminal
+export WANDB_API_KEY=""
+# The entity or team used for WANDB logging, should be set correctly, typically should be set your WANDB userID
+export WANDB_ENTITY=""
+```
+These exported environments variables are passed to the experiments' [config files](core/evals/configs) as environment variables.
+
 The following is an example of experiment invocation, by default we have 4 servers each equipped with 4 GPUs set in the `run_exps.sh` script.
 
 ```
@@ -109,7 +128,6 @@ bash run_E1.sh google_speech
 **Note each experiment is launched with its own timestamp and all logs and intermediate models are stored in a folder named after the timestamp**
 
 ## Plotting the experiments
-The experimental results are collected and uploaded automatically via the WANDB visualization tool APIs (\url{wandb.ai}). 
 To plot the results, we provide a customizable script that can automate plotting the results by invoking WANDB APIs to get the data and use Matplotlib for actual plotting. 
 The script is located in the plots directory and named [plot_exp.py](plots/plot_exp.py) which helps with plotting the results.
 We also give all the commands used for plotting all the figures in the paper as detailed in [plot_cmds](plots/plot_cmds.md), for example to plot the results from experiments of [run_E1](run_E1.sh), invoke the following command:

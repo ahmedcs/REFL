@@ -23,7 +23,7 @@ job_conf:
     - log_path: $MAIN_PATH/core/evals # Path of log files
     - job_name: google_speech                   # Generate logs under this folder: log_path/job_name/time_stamp
     - task: speech
-    - total_worker: $WORKERS                      # Number of participants per round, we use K=100 in our paper, large K will be much slower
+    - total_worker: $WORKERS                      # Number of participants per round, we use K=10 in our paper, large K will be much slower
     - data_set: google_speech                     # Dataset: openImg, google_speech, stackoverflow
     - data_dir: $DATA_PATH                            # Path of the dataset
     - data_map_dir: $DATA_PATH/client_data_mapping             # Allocation of data to each client, turn to iid setting if not provided
@@ -65,6 +65,7 @@ job_conf:
     - adapt_selection: $ADAPT_SELECT
     - sample_seed: $SAMPLESEED
     - wandb_key: $WANDB_API_KEY
+    - wandb_entity: $WANDB_ENTITY
     - wandb_tags: $TAGS
     - scale_sys: $SCALE_SYS
     - scale_sys_percent: $SCALE_SYS_PERCENT
