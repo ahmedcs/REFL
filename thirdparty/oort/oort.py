@@ -1,11 +1,10 @@
-import logging
-import math
-from collections import OrderedDict
-from random import Random
-
-import numpy as np2
-
 from .utils.lp import *
+import math, numpy
+
+from random import Random
+from collections import OrderedDict
+import logging
+import numpy as np2
 
 
 def create_training_selector(args):

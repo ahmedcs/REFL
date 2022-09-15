@@ -8,6 +8,8 @@ import multiprocessing, threading
 import numpy as np
 import collections
 import numpy
+from client_manager import clientManager
+from utils.yogi import YoGi
 
 # PyTorch libs
 import torch
@@ -27,26 +29,37 @@ from utils.utils_model import test_model
 from utils.divide_data import select_dataset, DataPartitioner
 
 if args.task == 'nlp':
-    from utils.nlp import load_and_cache_examples
+    from utils.nlp import mask_tokens, load_and_cache_examples
     from transformers import (
+        AdamW,
         AutoConfig,
+        AutoTokenizer,
+        MobileBertForPreTraining,
         AutoModelWithLMHead,
         AlbertTokenizer,
     )
 elif args.task == 'speech':
+    import numba
     from utils.speech import SPEECH
     from utils.transforms_wav import ChangeSpeedAndPitchAudio, ChangeAmplitude, FixAudioLength, ToMelSpectrogram, LoadAudio, ToTensor
     from utils.transforms_stft import ToSTFT, StretchAudioOnSTFT, TimeshiftAudioOnSTFT, FixSTFTDimension, ToMelSpectrogramFromSTFT, DeleteSTFT, AddBackgroundNoiseOnSTFT
     from utils.speech import BackgroundNoiseDataset
 elif args.task == 'detection':
     import pickle
-    from utils.rcnn.lib.roi_data_layer.roidb import combined_roidb
+    from utils.rcnn.lib.roi_data_layer.roidb import combiny
+    ed_roidb
+    from utils.rcnn.lib.datasets.factory import get_imdb
     from utils.rcnn.lib.datasets.pascal_voc import readClass
     from utils.rcnn.lib.roi_data_layer.roibatchLoader import roibatchLoader
-    from utils.rcnn.lib.model.utils.config import cfg_from_file, cfg_from_list
+    from utils.rcnn.lib.model.utils.config import cfg, cfg_from_file, cfg_from_list, get_output_dir
+    from utils.rcnn.lib.model.utils.net_utils import weights_normal_init, save_net, load_net, \
+        adjust_learning_rate, save_checkpoint, clip_gradient
     from utils.rcnn.lib.model.faster_rcnn.resnet import resnet
-#elif args.task == 'voice':
-#    from torch_baidu_ctc import CTCLoss
+    from utils.rcnn.lib.model.rpn.bbox_transform import clip_boxes
+    from utils.rcnn.lib.model.roi_layers import nms
+    from utils.rcnn.lib.model.rpn.bbox_transform import bbox_transform_inv
+elif args.task == 'voice':
+    from torch_baidu_ctc import CTCLoss
 
 # shared functions of aggregator and clients
 # initiate for nlp

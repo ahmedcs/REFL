@@ -4,10 +4,13 @@
 cwd=`pwd`
 PY=`which python`
 
+#first cmd line parameter is the dataset name
+dataset=$1
+
 #the path to the project
-export MAIN_PATH=/home/user/REFL
+export MAIN_PATH=/home/user/refl
 # the path to the dataset, note $dataset, the dataset name passed as argument to script
-export DATA_PATH=/home/user/REFL/dataset/data/${dataset}
+export DATA_PATH=/home/user/refl/dataset/data/${dataset}
 #the path to the conda envirnoment
 export CONDA_ENV=/home/user/anaconda3/envs/refl
 #the path to the conda source script
@@ -17,9 +20,6 @@ export CONDA_PATH=/home/user/anaconda3/
 export WANDB_API_KEY=""
 # The entity or team used for WANDB logging, should be set correctly, typically should be set your WANDB userID
 export WANDB_ENTITY=""
-
-#first cmd line parameter is the dataset name
-dataset=$1
 
 #set the path to the config file, use the files with _exp suffix
 cd core/evals
