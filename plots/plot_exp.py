@@ -37,7 +37,7 @@ params = {'backend': 'pdf',  # 'ps',
           'legend.handlelength': 2,
           'lines.linewidth': 4,
           'figure.figsize': fig_size,
-          # 'pdf.fonttype': 42,
+           'pdf.fonttype': 42,
           }
 plt.rcParams.update(params)
 
@@ -133,7 +133,6 @@ def autolabel(ax, rects):
 def smooth(y, box_pts=1):
     if method.startswith('safa'):
         return y
-
     cumsum_vec = np.cumsum(np.insert(y, 0, 0))
     y_smooth = (cumsum_vec[box_pts:] - cumsum_vec[:-box_pts]) / float(box_pts)
     # print(len(y), len(y_smooth))
@@ -141,7 +140,7 @@ def smooth(y, box_pts=1):
         avg = np.average(y[len(y_smooth):])
         for i in range(len(y_smooth), len(y)):
             y_smooth = np.insert(y_smooth, i, avg)
-      return y_smooth
+    return y_smooth
 
 
 def get_dfs(project, exp_type, total_worker):

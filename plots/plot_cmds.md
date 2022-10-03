@@ -18,7 +18,8 @@ Selection Adaptation (APT) - Fig 11: python plots/plot_exp.py 'exp_type' google_
 ```
 ### Commands to plot figures of the future proof
 ```
-EAFL-vs-Oort-Future: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'plot_scalesyspercent' 'Test' 1 10 1 oort
+Oort-Future: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'plot_scalesyspercent' 'Test' 1 10 1 oort
+REFL-Future: python plots/plot_exp.py 'exp_type' google_speech_resnet34 'plot_scalesyspercent' 'Test' 1 10 1 relay
 Safa-large: python plots/plot_exp.py 'safa_large' google_speech_resnet34 'fig3' 'Test' 0 3000
 ```
 

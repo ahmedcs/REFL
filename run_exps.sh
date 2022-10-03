@@ -21,6 +21,9 @@ export WANDB_API_KEY=""
 # The entity or team used for WANDB logging, should be set correctly, typically should be set your WANDB userID
 export WANDB_ENTITY=""
 
+#RESET LD Library path
+export LD_LIBRARY_PATH=""
+
 #set the path to the config file, use the files with _exp suffix
 cd core/evals
 config_dir=`ls -1 configs/$dataset/*exp.*`
