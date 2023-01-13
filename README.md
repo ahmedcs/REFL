@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="column">
+    <img src="badges/artifacts_evaluated_functional.jpg" align="right" width="15%" height="15%">
+  </div>
+  <div class="column">
+    <img src="badges/artifacts_available.jpg" align="right" width="15%" height="15%">
+  </div>
+</div>
 
 ## REFL: Resource-Efficient Federated Learning ([Paper](https://arxiv.org/abs/2111.01108))
 
